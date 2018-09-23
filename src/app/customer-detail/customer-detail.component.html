@@ -1,0 +1,7 @@
+<div *ngIf="customer">
+    <p>Id: {{customer.id}}</p>
+    <div><label>Name:<input [(ngModel)]="customer.name" placeholder="name"></label></div>
+    <div><label>Address:<input [(ngModel)]="customer.address" placeholder="address"></label></div> 
+    
+    <button (click)="goBack()">go back</button>
+</div>
