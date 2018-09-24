@@ -23,14 +23,21 @@ export class CustomerDetailComponent implements OnInit
 
   btOkClick(): void
     {
-    this.customerDataService.updateCustomer(this.customer);
+    if (+this.customer.id>0)
+      this.customerDataService.updateCustomer(this.customer);
+    else
+      this.customerDataService.addCustomer(this.customer);
     this.location.back();
     }  
 
   getCustomer(): void 
     {
     const id = this.route.snapshot.paramMap.get('id');
-    this.customerDataService.getCustomer(id).subscribe(w => this.customer = w);
+
+    if (+id>0)
+       this.customerDataService.getCustomer(id).subscribe(w => this.customer = w);
+    else
+       this.customer = { id:'0', name:'', address:'' };
     }
 
   }
