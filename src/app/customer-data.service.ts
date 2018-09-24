@@ -36,20 +36,25 @@ export class CustomerDataService
     return this.customerList;        
     }
     
+
   getCustomer(id: string): Observable<Customer>
     {
-    let rt: Customer;
+    let rt = new Observable<Customer>(w =>
+      {
+        this.db.collection<Customer>('customers').doc(id).ref.get().then(x => 
+            { 
+              const d = x.data() as Customer; d.id=id; w.next(d); 
+            } );
+      });
+   
+    return rt;
+    }
 
-    this.log('GetCustomer('+id+')');
-
-    this.db.collection<Customer>('customers').doc(id).ref.get().then(
-        function(doc) { 
-                      rt = doc.data() as Customer;
-                      rt.id = id;
-                      } 
-        );
-    
-    return of(rt);
+  updateCustomer(customer:Customer)
+    {
+      var nc:Customer = { ...customer };
+      delete nc.id;
+      this.db.collection<Customer>('customers').doc(customer.id).update(nc).then(w => { this.log("Document updated")});
     }
 
   deleteCustomer(id: string): Observable<Customer>

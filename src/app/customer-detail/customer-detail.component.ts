@@ -19,7 +19,13 @@ export class CustomerDetailComponent implements OnInit
 
   ngOnInit() { this.getCustomer(); }
 
-  goBack(): void { this.location.back(); }
+  btCancelClick(): void { this.location.back(); }
+
+  btOkClick(): void
+    {
+    this.customerDataService.updateCustomer(this.customer);
+    this.location.back();
+    }  
 
   getCustomer(): void 
     {
