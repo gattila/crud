@@ -9,12 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CustomersMasterComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
