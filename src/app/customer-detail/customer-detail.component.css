@@ -1,0 +1,28 @@
+.detail
+{
+    width : 100%;    
+}
+
+.detail label
+{    
+    display: inline-block;
+    width: 100px;  
+}
+
+.detail input
+{
+    display: inline-block;
+    width: 300px;
+    margin-top:5px;
+}
+
+.buttonBar
+{
+    position: absolute;    
+    left: 335px;
+}
+
+.buttonBar button
+{
+    margin: 5px;
+}

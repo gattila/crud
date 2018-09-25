@@ -1,8 +1,20 @@
-<div *ngIf="customer">
-    <p>Id: {{customer.id}}</p>
-    <div><label>Name:<input [(ngModel)]="customer.name" placeholder="name"></label></div>
-    <div><label>Address:<input [(ngModel)]="customer.address" placeholder="address"></label></div> 
-    
+<div *ngIf="customer" class="detail">
+    <p *ngIf="+customer.id > 0">Editing customer #{{customer.id}}</p>
+    <p *ngIf="+customer.id < 1">New customer</p>
+
+    <div>
+    <label for="inCustName">Name:</label>
+    <input id="inCustName" [(ngModel)]="customer.name" placeholder="name">
+    </div>
+
+    <div>
+    <label for="inCustAddress">Address:</label>
+    <input id="inCustAddress" [(ngModel)]="customer.address" placeholder="address">
+    </div>
+
+    <div class="buttonBar">    
     <button (click)="btOkClick()">Ok</button>
     <button (click)="btCancelClick()">Cancel</button>
+    </div>
+
 </div>

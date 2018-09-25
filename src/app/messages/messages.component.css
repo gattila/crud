@@ -1,0 +1,20 @@
+.messages-buttonbar
+{
+    margin-top: 10px;
+}
+
+.messages-buttonbar label
+{
+    font-weight: bold;
+    color: bold;
+}
+
+.messages-buttonbar button
+{
+    margin-left:10px;
+}
+
+.messages-details
+{
+    color:blue; 
+}
