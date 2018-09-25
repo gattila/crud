@@ -3,13 +3,16 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
 import { CustomersMasterComponent } from './customers-master/customers-master.component';
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
-import { AppRoutingModule } from './app-routing.module';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireModule } from 'angularfire2';
-import { environment } from '../environments/environment';
 import { MessagesComponent } from './messages/messages.component';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { MessagesComponent } from './messages/messages.component';
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
-    AngularFireModule.initializeApp(environment.firebase), AngularFirestoreModule
+    AngularFireModule.initializeApp(environment.firebase), 
+    AngularFirestoreModule,AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

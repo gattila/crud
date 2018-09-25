@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../model/customer';
-import { CUSTOMERS } from '../model/mock-customers';
-import { Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs'
 import { map } from 'rxjs/operators';
 import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
 import { MessageService } from './message.service'
-import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +48,7 @@ export class CustomerDataService
   addCustomer(customer:Customer)
     {
     delete customer.id;
+    
     // TODO: retry mechanism  
     this.db.collection<Customer>('customers').get().
           subscribe(w => 

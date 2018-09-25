@@ -1,0 +1,22 @@
+.loginHeader
+  {
+      width: 100%;      
+  } 
+
+.loginHeader span
+{
+      color: green;
+}
+
+.loginHeader button
+{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.loginHeader label
+{
+    position: absolute;
+    top: 5px;
+}

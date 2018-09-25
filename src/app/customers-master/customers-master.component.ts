@@ -18,7 +18,7 @@ export class CustomersMasterComponent implements OnInit
 
   deleteCustomer(id: string)
     {
-    this.customerDataService.deleteCustomer(id).subscribe(w => { this.getCustomers(); });    
+    this.customerDataService.deleteCustomer(id);    
     }
 
   private getCustomers()
