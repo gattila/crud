@@ -57,7 +57,7 @@ export class CustomerDataService
               let n=0;
               w.docs.forEach(x => { if (+x.id > n) n = +x.id; } );
               n=n+10;
-              this.db.collection<Customer>('customers').doc(n.toString()).set(customer);
+              this.db.collection<Customer>('customers').doc(n.toString()).set(customer).then(w => this.log('Added a new document:'+n));
               })
                     
     }
@@ -66,12 +66,12 @@ export class CustomerDataService
     {
       var nc:Customer = { ...customer };
       delete nc.id;
-      this.db.collection<Customer>('customers').doc(customer.id).update(nc).then(w => { this.log("Document updated")});
+      this.db.collection<Customer>('customers').doc(customer.id).update(nc).then(w => { this.log("Updated the document:"+customer.id)});
     }
 
   deleteCustomer(id: string)
     {    
-    this.db.collection<Customer>('customers').doc(id).delete();
+    this.db.collection<Customer>('customers').doc(id).delete().then(w => this.log('Deleted the document:'+id));
     }
 
   log(msg:string)
