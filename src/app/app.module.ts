@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { CustomersMasterComponent } from './customers-master/customers-master.component';
-import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
-import { MessagesComponent } from './messages/messages.component';
+import { CustomersMasterComponent } from './components/customers-master/customers-master.component';
+import { CustomerDetailComponent } from './components/customer-detail/customer-detail.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './modules/app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';

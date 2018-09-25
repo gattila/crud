@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Customer } from '../../model/customer';
-import { CustomerDataService } from '../customer-data.service';
+import { CustomerDataService } from '../../services/customer-data.service'
 
 
 @Component({
