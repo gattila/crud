@@ -49,13 +49,17 @@ export class CustomerDataService
 
   addCustomer(customer:Customer)
     {
-      delete customer.id;
-      
-      this.db.collection<Customer>('customers').snapshotChanges()
-        .forEach(w => w.forEach(q => {
-          console.log('Latest customer id:'+q.payload.doc.id);
-        }));
-      
+    delete customer.id;
+    // TODO: retry mechanism  
+    this.db.collection<Customer>('customers').get().
+          subscribe(w => 
+              { 
+              let n=0;
+              w.docs.forEach(x => { if (+x.id > n) n = +x.id; } );
+              n=n+10;
+              this.db.collection<Customer>('customers').doc(n.toString()).set(customer);
+              })
+                    
     }
 
   updateCustomer(customer:Customer)
@@ -65,10 +69,9 @@ export class CustomerDataService
       this.db.collection<Customer>('customers').doc(customer.id).update(nc).then(w => { this.log("Document updated")});
     }
 
-  deleteCustomer(id: string): Observable<Customer>
-    {
-    const rt = this.getCustomer(id);
-    return null;        
+  deleteCustomer(id: string)
+    {    
+    this.db.collection<Customer>('customers').doc(id).delete();
     }
 
   log(msg:string)
