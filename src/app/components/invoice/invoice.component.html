@@ -5,7 +5,10 @@
   </button>
 </div>
 <div *ngIf="invoice" class="modal-body">
-Customer: {{invoice.customer.name}} {{invoice.customer.address}}
+  <p>Customer: {{invoice.customer.name}} {{invoice.customer.address}}</p>
+  <p>
+    <label>InvoiceDate:{{invoice.header.invoiceDate | date:'yyyy.dd.MM'}}</label>
+  </p>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button>

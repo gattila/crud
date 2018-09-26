@@ -27,7 +27,11 @@ export class CustomersMasterComponent implements OnInit
 
   createInvoice(id: string)
     {            
-      this.bsModalRef = this.modalService.show(InvoiceComponent, {initialState: {customerId: id}});      
+      this.bsModalRef = this.modalService.show(InvoiceComponent, 
+               {
+                 initialState: {customerId: id}, 
+                 class:'invoice-dialog'                
+               });      
     }
 
   private getCustomers()
