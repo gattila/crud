@@ -4,6 +4,7 @@
   <li *ngFor="let customer of customers">
     <a routerLink="/detail/{{customer.id}}"><span class="badge">{{customer.id}}</span> {{customer.name}}</a> 
     <button class="delete" title="delete customer" (click)="deleteCustomer(customer.id)">x</button>
+    <button class="invoice" title="create invoice for the customer" (click)="createInvoice(customer.id)">I</button>
   </li>
 </ul>
 

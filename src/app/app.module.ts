@@ -7,11 +7,13 @@ import { environment } from '../environments/environment';
 import { CustomersMasterComponent } from './components/customers-master/customers-master.component';
 import { CustomerDetailComponent } from './components/customer-detail/customer-detail.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { InvoiceComponent } from './components/invoice/invoice.component';
 
 import { AppRoutingModule } from './modules/app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -19,13 +21,16 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
     AppComponent,
     CustomersMasterComponent,
     CustomerDetailComponent,
-    MessagesComponent
+    MessagesComponent,
+    InvoiceComponent
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebase), 
-    AngularFirestoreModule,AngularFireAuthModule
+    AngularFirestoreModule,AngularFireAuthModule,
+    ModalModule.forRoot()
   ],
+  entryComponents:[InvoiceComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
