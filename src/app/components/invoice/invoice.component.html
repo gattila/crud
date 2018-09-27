@@ -5,11 +5,93 @@
   </button>
 </div>
 <div *ngIf="invoice" class="modal-body">
-  <p>Customer: {{invoice.customer.name}} {{invoice.customer.address}}</p>
-  <p>
-    <label>InvoiceDate:{{invoice.header.invoiceDate | date:'yyyy.dd.MM'}}</label>
-  </p>
+  Customer: {{invoice.customer.name}} {{invoice.customer.address}}
+  <hr>
+  <div class="row">
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inDate">InvoiceDate:</label>
+      <input id="inDate" type="text" class="form-control" value="{{invoice.header.invoiceDate | date:'yyyy.dd.MM'}}"
+        readonly="true">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inDue">Due:</label>
+      <input id="inDue" type="text" placeholder="Due" class="form-control" bsDatepicker [(ngModel)]="invoice.header.due">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inFulfilment">Fulfilment:</label>
+      <input id="inFulfilment" type="text" placeholder="Fulfilment" class="form-control" bsDatepicker [(ngModel)]="invoice.header.fulfilment">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-3 form-group">
+      <label for="inPayment">Payment method:</label>
+
+      <select id="inPayment" class="form-control" [(ngModel)]="invoice.header.paymentMethod">
+        <option value="Cash">Cash</option>
+        <option value="Paypal">Paypal</option>
+        <option value="CCard">Credit Card</option>
+      </select>
+    </div>
+
+    <div class="w-100"></div>
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inPrCode">Product code:</label>
+      <input id="inPrCode" type="text" class="form-control" [(ngModel)]="line.productCode">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-4 form-group">
+      <label for="inPrName">Product name:</label>
+      <input id="inPrName" type="text" class="form-control" [(ngModel)]="line.productName">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inPrPrice">Product price:</label>
+      <input id="inPrPrice" type="text" class="form-control" [(ngModel)]="line.productPrice">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-1 form-group">
+      <label for="inPrQty">Qty:</label>
+      <input id="inPrQty" type="text" class="form-control" [(ngModel)]="line.qty">
+    </div>
+
+    <div class="col-xs-12 col-12 col-md-2 form-group">
+      <label for="inUnit">Unit:</label>
+
+      <select id="inUnit" class="form-control" [(ngModel)]="line.unit">
+        <option value="Piece">Piece</option>
+        <option value="Litre">Litre</option>
+        <option value="Kg">Kg</option>
+        <option value="Hour">Hour</option>
+      </select>
+    </div>
+
+    <button type="button" class="btn" (click)="addToInvoice()">+</button>
+
+  </div>
+  
+  <div class="row">
+      <div class="col-xs-12 col-12 col-md-2 form-group">Product code</div>
+      <div class="col-xs-12 col-12 col-md-3 form-group">Product name</div>
+      <div class="col-xs-12 col-12 col-md-1 form-group">Qty</div>
+      <div class="col-xs-12 col-12 col-md-1 form-group">Unit</div>
+      <div class="col-xs-12 col-12 col-md-2 form-group">Price</div>
+      <div class="col-xs-12 col-12 col-md-2 form-group">Gross</div>
+  </div>
+
+  <div *ngFor="let detail of invoice.details" class="row">
+      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productCode}}</div>
+      <div class="col-xs-12 col-12 col-md-3 form-group">{{detail.productName}}</div>
+      <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.qty}}</div>
+      <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.unit}}</div>
+      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice}}</div>
+      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice*detail.qty}}</div>      
+  </div>
+
 </div>
 <div class="modal-footer">
+  <p *ngIf="invoice">Net: {{invoice.header.totalNet | number:"1.0-0"}} Vat: {{invoice.header.totalVat | number:"1.0-0"}} Gross: {{invoice.header.totalNet+ invoice.header.totalVat | number:"1.0-0"}} </p>
   <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button>
 </div>

@@ -14,6 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ModalModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -27,10 +28,10 @@ import { ModalModule } from 'ngx-bootstrap';
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebase), 
-    AngularFirestoreModule,AngularFireAuthModule,
-    ModalModule.forRoot()
+    AngularFirestoreModule, AngularFireAuthModule,
+    ModalModule.forRoot(), BsDatepickerModule.forRoot()
   ],
-  entryComponents:[InvoiceComponent],
+  entryComponents: [InvoiceComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

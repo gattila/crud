@@ -14,9 +14,9 @@ import {Invoice} from '../viewmodel/invoice';
 
 export class InvoiceDataService 
   {
-  constructor(private customerDataService:CustomerDataService) { }
+  constructor(private customerDataService: CustomerDataService) { }
 
-  createInvoice(customerId:string): Observable<Invoice>
+  createInvoice(customerId: string): Observable<Invoice>
     {
     return new Observable<Invoice>(o => 
       {      
@@ -24,16 +24,21 @@ export class InvoiceDataService
         subscribe(w => 
           {
           const currentDate = new Date();
-          const hdr:InvoiceHeader = {id:'', 
-                                     customerId:customerId, 
-                                     invoiceDate:currentDate, 
-                                     due:currentDate, 
-                                     fulfilment:currentDate, 
-                                     paymentMethod:'Cash',
-                                     totalNet:0,
-                                     totalVat:0 };
+          const hdr: InvoiceHeader = {id: '', 
+                                     customerId: customerId, 
+                                     invoiceDate: currentDate, 
+                                     due: currentDate, 
+                                     fulfilment: currentDate, 
+                                     paymentMethod: 'Cash',
+                                     totalNet: 0,
+                                     totalVat: 0 };
 
-          const rt:Invoice = { customer:w, header: hdr, details:[] }
+          const rt = new Invoice();
+          
+          rt.customer = w;
+          rt.header = hdr;
+          rt.details = [];
+                    
           o.next(rt);
           });
       });
