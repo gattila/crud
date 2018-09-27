@@ -1,0 +1,11 @@
+.modal-body
+{
+    height: 550px;
+}
+
+.bottom-row
+{
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+}

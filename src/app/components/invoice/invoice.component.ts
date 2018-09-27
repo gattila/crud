@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 import { Customer } from '../../model/customer';
 import { InvoiceHeader } from '../../model/invoiceheader';
@@ -21,6 +22,10 @@ export class InvoiceComponent implements OnInit
   customerId: string;
   invoice: Invoice;  
   line: InvoiceDetail;
+
+  itemsPerPage = 5;
+  currentPage = 1;
+  detailsPage: InvoiceDetail[];
     
   constructor(public bsModalRef: BsModalRef, private invoiceDataService: InvoiceDataService) 
     { 
@@ -29,7 +34,11 @@ export class InvoiceComponent implements OnInit
 
   ngOnInit() 
     { 
-    this.invoiceDataService.createInvoice(this.customerId).subscribe(w => this.invoice = w);    
+    this.invoiceDataService.createInvoice(this.customerId).subscribe(w => 
+         {            
+         this.invoice = w; 
+         this.generateDetails();
+         });    
     }
   
   addToInvoice(): void
@@ -37,6 +46,7 @@ export class InvoiceComponent implements OnInit
     this.invoice.details.push(this.line);
     this.recalcHeader();
     this.resetToAddMode();
+    this.generateDetails();
     }
   
   resetToAddMode(): void
@@ -60,4 +70,19 @@ export class InvoiceComponent implements OnInit
                                         this.invoice.header.totalVat += v; });    
     }
 
+
+    generateDetails(): void
+      {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+
+      this.detailsPage = this.invoice.details.slice(start, end);
+      }
+
+    pageChanged(event: PageChangedEvent): void 
+      {
+      const startItem = (event.page - 1) * event.itemsPerPage;
+      const endItem = event.page * event.itemsPerPage;
+      this.detailsPage = this.invoice.details.slice(startItem, endItem);
+      }
   }

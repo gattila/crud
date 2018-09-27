@@ -71,27 +71,31 @@
     <button type="button" class="btn" (click)="addToInvoice()">+</button>
 
   </div>
-  
+
   <div class="row">
-      <div class="col-xs-12 col-12 col-md-2 form-group">Product code</div>
-      <div class="col-xs-12 col-12 col-md-3 form-group">Product name</div>
-      <div class="col-xs-12 col-12 col-md-1 form-group">Qty</div>
-      <div class="col-xs-12 col-12 col-md-1 form-group">Unit</div>
-      <div class="col-xs-12 col-12 col-md-2 form-group">Price</div>
-      <div class="col-xs-12 col-12 col-md-2 form-group">Gross</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Product code</div>
+    <div class="col-xs-12 col-12 col-md-3 form-group">Product name</div>
+    <div class="col-xs-12 col-12 col-md-1 form-group">Qty</div>
+    <div class="col-xs-12 col-12 col-md-1 form-group">Unit</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Price</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Gross</div>
   </div>
 
-  <div *ngFor="let detail of invoice.details" class="row">
-      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productCode}}</div>
-      <div class="col-xs-12 col-12 col-md-3 form-group">{{detail.productName}}</div>
-      <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.qty}}</div>
-      <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.unit}}</div>
-      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice}}</div>
-      <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice*detail.qty}}</div>      
+  <div *ngFor="let detail of detailsPage" class="row">
+    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productCode}}</div>
+    <div class="col-xs-12 col-12 col-md-3 form-group">{{detail.productName}}</div>
+    <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.qty}}</div>
+    <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.unit}}</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice}}</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice*detail.qty}}</div>
   </div>
 
-</div>
-<div class="modal-footer">
-  <p *ngIf="invoice">Net: {{invoice.header.totalNet | number:"1.0-0"}} Vat: {{invoice.header.totalVat | number:"1.0-0"}} Gross: {{invoice.header.totalNet+ invoice.header.totalVat | number:"1.0-0"}} </p>
-  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button>
-</div>
+  <div class="row bottom-row">
+    <div class="col-xs-12 col-12 col-md-4 form-group">
+      <pagination [itemsPerPage]=5 [totalItems]="invoice.details.length" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
+    </div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Net: {{invoice.header.totalNet | number:"1.0-0"}}</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Vat: {{invoice.header.totalVat | number:"1.0-0"}}</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Gross: {{invoice.header.totalNet+ invoice.header.totalVat | number:"1.0-0"}}</div>
+    <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button></div>
+  </div>
