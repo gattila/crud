@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, ObjectUnsubscribedError } from 'rxjs'
+import { Observable, of, ObjectUnsubscribedError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
-import { MessageService } from './message.service'
-import { CustomerDataService } from '../services/customer-data.service'
+import { MessageService } from './message.service';
+import { CustomerDataService } from '../services/customer-data.service';
 
-import {InvoiceHeader} from '../model/invoiceheader';
-import {InvoiceDetail} from '../model/invoicedetail';
+import { InvoiceHeader } from '../model/invoiceheader';
+import { InvoiceDetail } from '../model/invoicedetail';
 import {Customer} from '../model/customer';
-import {Invoice} from '../viewmodel/invoice';
+import { Invoice } from '../viewmodel/invoice';
 
 @Injectable({ providedIn: 'root' })
 
 export class InvoiceDataService 
   {
-  constructor(private customerDataService: CustomerDataService) { }
+  constructor(private customerDataService: CustomerDataService,
+              private messageService: MessageService,  
+              private db: AngularFirestore) { }
 
   createInvoice(customerId: string): Observable<Invoice>
     {
@@ -45,5 +47,26 @@ export class InvoiceDataService
 
     }  
   
+  writeInvoice(inv: Invoice): Promise<{}>
+    {
+    const rt = new Promise((resolve) => 
+      {    
+        this.db.collection<InvoiceHeader>('invoice').add(inv.header)
+        .then(w =>
+          {          
+            
+          inv.details.forEach(d => 
+                {
+                const data = JSON.parse(JSON.stringify(d));
+                w.collection('details').add(data);
+                });
+            
+          });
+            
+          resolve();
+          });
+                                       
+    return rt;
+    }
 
   }

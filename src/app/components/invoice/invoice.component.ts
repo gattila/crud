@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-
-import { Customer } from '../../model/customer';
-import { InvoiceHeader } from '../../model/invoiceheader';
 import { InvoiceDetail } from '../../model/invoicedetail';
 import { Invoice } from '../../viewmodel/invoice';
-
-import { InvoiceDataService } from '../../services/invoice-data.service'
+import { InvoiceDataService } from '../../services/invoice-data.service';
 
 @Component({
   selector: 'app-invoice',
@@ -41,6 +37,11 @@ export class InvoiceComponent implements OnInit
          });    
     }
   
+  saveAndClose(): void
+    {
+    this.invoiceDataService.writeInvoice(this.invoice).then(() => { this.bsModalRef.hide(); });    
+    }
+
   addToInvoice(): void
     {
     this.invoice.details.push(this.line);

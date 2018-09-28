@@ -94,11 +94,12 @@
   </div>
 
   <div class="row bottom-row">
-    <div class="col-xs-12 col-12 col-md-4 form-group">
+    <div class="col-xs-12 col-12 col-md-3 form-group">
       <pagination [itemsPerPage]=5 [totalItems]="invoice.details.length" [(ngModel)]="currentPage" (pageChanged)="pageChanged($event)"></pagination>
     </div>
     <div class="col-xs-12 col-12 col-md-2 form-group">Net: {{invoice.header.totalNet | number:"1.0-0"}}</div>
     <div class="col-xs-12 col-12 col-md-2 form-group">Vat: {{invoice.header.totalVat | number:"1.0-0"}}</div>
     <div class="col-xs-12 col-12 col-md-2 form-group">Gross: {{invoice.header.totalNet+ invoice.header.totalVat | number:"1.0-0"}}</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Close</button></div>
+    <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="saveAndClose()">Ok</button></div>
+    <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button></div>
   </div>
