@@ -49,6 +49,22 @@ export class InvoiceComponent implements OnInit
     this.generateDetails();
     }
   
+
+  deleteRow(row: InvoiceDetail): void 
+    {
+    for (let i = 0; i < this.invoice.details.length;  i++) 
+      {
+      if (this.invoice.details[i] === row) 
+        {
+        this.invoice.details.splice(i, 1);
+        this.recalcHeader();        
+        this.generateDetails();    
+        break;
+        }
+      }
+    }
+
+
   resetToAddMode(): void
     {
     this.line = new InvoiceDetail();

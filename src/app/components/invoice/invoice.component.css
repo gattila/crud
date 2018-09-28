@@ -9,3 +9,13 @@
     bottom: -20px;
     width: 100%;
 }
+
+.deleteRow
+    {
+    background-color:lightgray
+    }
+
+.editRow
+    {
+    background-color:lightgray
+    }
