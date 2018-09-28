@@ -15,6 +15,7 @@
 <p>Invoices:</p>
 
 <div class="row">
+  <div class="col-xs-12 col-12 col-md-1 form-group">Inv. No.</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">Date</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">Due</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">Fulfilment</div>
@@ -24,7 +25,7 @@
 </div>
 
 <div *ngFor="let hdr of invoiceHeaders" class="row">
-
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceNo}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceDate.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.due.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.fulfilment.toDate() | date:'yyyy.dd.MM'}}</div>

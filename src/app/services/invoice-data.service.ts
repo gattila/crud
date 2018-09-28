@@ -9,6 +9,7 @@ import { InvoiceHeader } from '../model/invoiceheader';
 import { InvoiceDetail } from '../model/invoicedetail';
 import {Customer} from '../model/customer';
 import { Invoice } from '../viewmodel/invoice';
+import { InvokeFunctionExpr } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
 
@@ -27,6 +28,7 @@ export class InvoiceDataService
           {
           const currentDate = new Date();
           const hdr: InvoiceHeader = {id:'',
+                                      invoiceNo: 0,
                                       customerId: customerId, 
                                       invoiceDate: currentDate, 
                                       due: currentDate, 
@@ -40,7 +42,7 @@ export class InvoiceDataService
           rt.customer = w;
           rt.header = hdr;
           rt.details = [];
-                    
+                              
           o.next(rt);
           });
       });
@@ -48,19 +50,38 @@ export class InvoiceDataService
     }  
   
   writeInvoice(inv: Invoice): void
+    {    
+    this.db.collection<InvoiceHeader>('invoice', w=>w.orderBy('invoiceNo','desc').limit(1)).get()
+      .subscribe(w =>
+        {
+        this.messageService.add('Calculating new invocie No' );
+        let n = 0;
+        w.docs.forEach(q => { 
+                            let h = q.data() as InvoiceHeader;
+                            if (h.invoiceNo > n) n=h.invoiceNo;   
+                            });                  
+        n = n + 1;
+        this.writeInvoiceBase(inv,n);        
+        })            
+    }
+
+  writeInvoiceBase(inv: Invoice, invNo: number): void
     {
+    this.messageService.add('Created invoice:' + invNo );
+
     delete inv.header.id;
+    inv.header.invoiceNo = invNo;
 
     this.db.collection<InvoiceHeader>('invoice').add(inv.header)
-        .then(w =>
-          {                      
-          inv.details.forEach(d => 
-                {
-                const data = JSON.parse(JSON.stringify(d));
-                w.collection('details').add(data);
-                });
-            
-          });                                                             
+      .then(w =>
+        {                      
+        inv.details.forEach(d => 
+              {
+              const data = JSON.parse(JSON.stringify(d));
+              w.collection('details').add(data);
+              });
+          
+        });                                                             
     }
 
   getInvoiceListOfCustomer(customerId: string): Observable<InvoiceHeader[]>
