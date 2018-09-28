@@ -39,7 +39,8 @@ export class InvoiceComponent implements OnInit
   
   saveAndClose(): void
     {
-    this.invoiceDataService.writeInvoice(this.invoice).then(() => { this.bsModalRef.hide(); });    
+    this.invoiceDataService.writeInvoice(this.invoice);    
+    this.bsModalRef.hide();
     }
 
   addToInvoice(): void

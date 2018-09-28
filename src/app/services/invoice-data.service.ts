@@ -26,14 +26,14 @@ export class InvoiceDataService
         subscribe(w => 
           {
           const currentDate = new Date();
-          const hdr: InvoiceHeader = {id: '', 
-                                     customerId: customerId, 
-                                     invoiceDate: currentDate, 
-                                     due: currentDate, 
-                                     fulfilment: currentDate, 
-                                     paymentMethod: 'Cash',
-                                     totalNet: 0,
-                                     totalVat: 0 };
+          const hdr: InvoiceHeader = {id:'',
+                                      customerId: customerId, 
+                                      invoiceDate: currentDate, 
+                                      due: currentDate, 
+                                      fulfilment: currentDate, 
+                                      paymentMethod: 'Cash',
+                                      totalNet: 0,
+                                      totalVat: 0 };
 
           const rt = new Invoice();
           
@@ -47,26 +47,37 @@ export class InvoiceDataService
 
     }  
   
-  writeInvoice(inv: Invoice): Promise<{}>
+  writeInvoice(inv: Invoice): void
     {
-    const rt = new Promise((resolve) => 
-      {    
-        this.db.collection<InvoiceHeader>('invoice').add(inv.header)
+    delete inv.header.id;
+
+    this.db.collection<InvoiceHeader>('invoice').add(inv.header)
         .then(w =>
-          {          
-            
+          {                      
           inv.details.forEach(d => 
                 {
                 const data = JSON.parse(JSON.stringify(d));
                 w.collection('details').add(data);
                 });
             
-          });
-            
-          resolve();
-          });
-                                       
-    return rt;
+          });                                                             
+    }
+
+  getInvoiceListOfCustomer(customerId: string): Observable<InvoiceHeader[]>
+    {
+      return this.db.collection<InvoiceHeader>('invoice', w => w.where('customerId','==',customerId) ).snapshotChanges().pipe
+        (
+        map(actions => 
+          {
+          return actions.map(a => 
+             {
+             const data = a.payload.doc.data() as InvoiceHeader;
+             const id = a.payload.doc.id;
+             const h: InvoiceHeader = { id, ...data };
+             return h;
+             } ); 
+          }
+        ));                
     }
 
   }

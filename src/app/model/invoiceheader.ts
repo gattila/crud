@@ -1,6 +1,6 @@
 export class InvoiceHeader
   { 
-  id: string;      
+  id: string;   
   invoiceDate: Date;
   due: Date;
   fulfilment: Date;

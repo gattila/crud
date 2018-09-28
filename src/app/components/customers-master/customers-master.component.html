@@ -1,7 +1,7 @@
 <h2>Customers</h2>
 
 <ul class="customers">
-  <li *ngFor="let customer of customers">
+  <li *ngFor="let customer of customers" (click)="onSelect(customer)">
     <a routerLink="/detail/{{customer.id}}"><span class="badge">{{customer.id}}</span> {{customer.name}}</a> 
     <button class="delete" title="delete customer" (click)="deleteCustomer(customer.id)">x</button>
     <button class="invoice" title="create invoice for the customer" (click)="createInvoice(customer.id)">I</button>
@@ -10,4 +10,27 @@
 
 <a class="button" routerLink="/detail/0">New Customer</a> 
 
+<hr>
+
+<p>Invoices:</p>
+
+<div class="row">
+  <div class="col-xs-12 col-12 col-md-1 form-group">Date</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Due</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Fulfilment</div>
+  <div class="col-xs-12 col-12 col-md-2 form-group">Payment</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Net</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Gross</div>
+</div>
+
+<div *ngFor="let hdr of invoiceHeaders" class="row">
+
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceDate.toDate() | date:'yyyy.dd.MM'}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.due.toDate() | date:'yyyy.dd.MM'}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.fulfilment.toDate() | date:'yyyy.dd.MM'}}</div>
+  <div class="col-xs-12 col-12 col-md-2 form-group">{{hdr.paymentMethod}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.totalNet | number:'1.0-0'}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.totalNet + hdr.totalVat | number:'1.0-0'}}</div>
+  
+</div>
 
