@@ -72,7 +72,7 @@ export class InvoiceDataService
     delete inv.header.id;
     inv.header.invoiceNo = invNo;
 
-    this.db.collection<InvoiceHeader>('invoice').add(inv.header)
+    this.db.collection<InvoiceHeader>('invoice', w => w.orderBy('invoiceNo')).add(inv.header)
       .then(w =>
         {                      
         inv.details.forEach(d => 
