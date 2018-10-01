@@ -25,13 +25,29 @@
 </div>
 
 <div *ngFor="let hdr of invoiceHeaders" class="row">
-  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceNo}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group"><button (click)="onSelectInvoice(hdr)">{{hdr.invoiceNo}}</button></div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceDate.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.due.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.fulfilment.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-2 form-group">{{hdr.paymentMethod}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.totalNet | number:'1.0-0'}}</div>
-  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.totalNet + hdr.totalVat | number:'1.0-0'}}</div>
-  
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.totalNet + hdr.totalVat | number:'1.0-0'}}</div>  
 </div>
 
+<div class="row">
+  <div class="col-xs-12 col-12 col-md-1 form-group">Pr. Code</div>
+  <div class="col-xs-12 col-12 col-md-2 form-group">Pr.Name</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Price</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Qty</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">Unit</div>  
+  <div class="col-xs-12 col-12 col-md-1 form-group">Gross</div>
+</div>
+
+<div *ngFor="let dtl of invoiceDetails" class="row">
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{dtl.productCode}}</div>
+  <div class="col-xs-12 col-12 col-md-2 form-group">{{dtl.productName}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{dtl.productPrice}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{dtl.qty}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{dtl.unit}}</div>
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{dtl.qty*dtl.productPrice | number:'1.0-0'}}</div>
+</div>

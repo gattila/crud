@@ -86,7 +86,7 @@ export class InvoiceDataService
 
   getInvoiceListOfCustomer(customerId: string): Observable<InvoiceHeader[]>
     {
-      return this.db.collection<InvoiceHeader>('invoice', w => w.where('customerId','==',customerId) ).snapshotChanges().pipe
+      return this.db.collection<InvoiceHeader>('invoice', w => w.where('customerId','==',customerId)).snapshotChanges().pipe
         (
         map(actions => 
           {
@@ -99,6 +99,12 @@ export class InvoiceDataService
              } ); 
           }
         ));                
+    } 
+        
+  getInvoiceDetails(invoiceHeaderId:string): Observable<InvoiceDetail[]> 
+    {
+    return this.db.collection<InvoiceHeader>('invoice').doc(invoiceHeaderId).collection<InvoiceDetail>('details').valueChanges();
     }
+
 
   }

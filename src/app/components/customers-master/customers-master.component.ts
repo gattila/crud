@@ -6,6 +6,7 @@ import { CustomerDataService } from '../../services/customer-data.service'
 import { InvoiceDataService } from '../../services/invoice-data.service';
 import { InvoiceComponent } from '../invoice/invoice.component'
 import { InvoiceHeader } from '../../model/invoiceheader';
+import { InvoiceDetail } from '../../model/invoicedetail';
 
 @Component({
   selector: 'app-customers-master',
@@ -16,8 +17,11 @@ import { InvoiceHeader } from '../../model/invoiceheader';
 export class CustomersMasterComponent implements OnInit 
   {
   selectedCustomer: Customer;
+  selectedInvoiceHeader: InvoiceHeader;
+
   customers: Customer[];
   invoiceHeaders: InvoiceHeader[];
+  invoiceDetails: InvoiceDetail[];
 
   bsModalRef: BsModalRef;
 
@@ -45,6 +49,12 @@ export class CustomersMasterComponent implements OnInit
     {
     this.selectedCustomer = customer;
     this.getInvoiceHeaders(customer.id);
+    }
+
+  onSelectInvoice(invoiceHeader: InvoiceHeader)
+    {
+    this.selectedInvoiceHeader=invoiceHeader;
+    this.invoiceDataService.getInvoiceDetails(invoiceHeader.id).subscribe(w => this.invoiceDetails = w);
     }
 
   private getCustomers()

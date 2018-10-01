@@ -48,8 +48,7 @@ export class CustomerDataService
   addCustomer(customer: Customer)
     {
     delete customer.id;
-    
-    // TODO: retry mechanism  
+        
     this.db.collection<Customer>('customers').get().
           subscribe(w => 
               { 
