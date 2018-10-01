@@ -24,8 +24,8 @@
   <div class="col-xs-12 col-12 col-md-1 form-group">Gross</div>
 </div>
 
-<div *ngFor="let hdr of invoiceHeaders" class="row">
-  <div class="col-xs-12 col-12 col-md-1 form-group"><button (click)="onSelectInvoice(hdr)">{{hdr.invoiceNo}}</button></div>
+<div *ngFor="let hdr of invoiceHeaders" class="row invoice-headers" (click)="onSelectInvoice(hdr)">
+  <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceNo}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.invoiceDate.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.due.toDate() | date:'yyyy.dd.MM'}}</div>
   <div class="col-xs-12 col-12 col-md-1 form-group">{{hdr.fulfilment.toDate() | date:'yyyy.dd.MM'}}</div>

@@ -1,11 +1,12 @@
 /* customersComponent's private CSS styles */
-.selected {
+.selected 
+  {
     background-color: #CFD8DC !important;
     color: white;
   }
 
-  a.button 
-    {
+a.button 
+  {
     -webkit-appearance: button;
     -moz-appearance: button;
     appearance: button;
@@ -13,29 +14,32 @@
     text-decoration: none;
     color: initial;    
     background-color:lightgray
-    }
+  }
 
-  .delete
-    {
+.delete
+  {
     position: absolute;
     right:24px;
     background-color:lightgray
-    }
+  }
 
-    .invoice
+.invoice
+  {
+  position: absolute;
+  right:1px;
+  background-color:lightgray
+  }
+
+  .customers 
     {
-    position: absolute;
-    right:1px;
-    background-color:lightgray
-    }
-
-  .customers {
     margin: 0 0 2em 0;
     list-style-type: none;
     padding: 0;
     width: 25em;    
-  }
-  .customers li {
+    }
+
+  .customers li 
+    {
     cursor: pointer;
     position: relative;
     left: 0;
@@ -43,21 +47,29 @@
     margin: .5em;
     padding: .2em 0;    
     border-radius: 4px;
-  }
-  .customers li.selected:hover {
+    }
+
+  .customers li.selected:hover 
+    {
     background-color: #BBD8DC !important;
     color: white;
-  }
-  .customers li:hover {
+    }
+
+  .customers li:hover 
+    {
     color: #607D8B;
     background-color: #DDD;
     left: .1em;
-  }
-  .customers .text {
+    }
+
+  .customers .text 
+    {
     position: relative;
     top: -3px;
-  }
-  .customers .badge {
+    }
+
+  .customers .badge 
+    {
     display: inline-block;
     font-size: small;
     color: white;
@@ -68,4 +80,10 @@
     top: -1px;
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
-  }
+    }
+
+.invoice-headers:hover
+    {
+    color: Blue;
+    cursor: pointer;    
+    }
