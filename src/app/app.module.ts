@@ -14,6 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ModalModule, BsDatepickerModule, PaginationModule } from 'ngx-bootstrap';
+import { AgGridModule } from 'ag-grid-angular';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ModalModule, BsDatepickerModule, PaginationModule } from 'ngx-bootstrap
     BrowserModule, FormsModule, AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebase), 
     AngularFirestoreModule, AngularFireAuthModule,
-    ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot()
+    ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot(),
+    AgGridModule.withComponents([]),
   ],
   entryComponents: [InvoiceComponent],
   providers: [],
