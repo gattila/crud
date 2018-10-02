@@ -76,16 +76,10 @@ export class CustomersMasterComponent implements OnInit
     onSelectionChanged: () =>
       {        
       var sr = this.invoiceHeaderGridOptions.api.getSelectedRows();
-      if (sr.length==1)
-         {
-         this.selectedInvoiceHeader=sr[0];
-         this.invoiceDataService.getInvoiceDetails(this.selectedInvoiceHeader.id).subscribe(w => 
-             {
-             this.invoiceDetails = w;
-             this.invoiceDetailGridOptions.api.setRowData(this.invoiceDetails);
-             this.invoiceDetailGridOptions.api.sizeColumnsToFit();
-             } );
-         }
+      if (sr.length==1)         
+         this.selectInvoiceHeader(sr[0]);
+      else
+         this.selectInvoiceHeader(null);         
       }
     };
 
@@ -102,10 +96,9 @@ export class CustomersMasterComponent implements OnInit
       {        
       var sr = this.customerGridOptions.api.getSelectedRows();
       if (sr.length==1)
-         {         
-         this.selectedCustomer=sr[0];
-         this.getInvoiceHeaders(this.selectedCustomer.id);
-         }
+        this.selectCustomer(sr[0]);
+      else
+        this.selectCustomer(null);
       }
     };
  
@@ -138,15 +131,55 @@ export class CustomersMasterComponent implements OnInit
         });           
     }
   
-  private getInvoiceHeaders(customerId:string)
+  private selectCustomer(customer:Customer)
     {
-    this.invoiceDataService.getInvoiceListOfCustomer(customerId).
-       subscribe(w => 
-          {
-          this.invoiceHeaders = w
-          this.invoiceHeaderGridOptions.api.setRowData(this.invoiceHeaders);
-          this.invoiceHeaderGridOptions.api.sizeColumnsToFit();          
-          } );
+    this.selectedCustomer = customer;
+    if (customer != null)
+      {
+      this.invoiceDataService.getInvoiceListOfCustomer(customer.id).
+        subscribe(w => 
+           {
+           this.invoiceHeaders = w
+           this.invoiceHeaderGridOptions.api.setRowData(this.invoiceHeaders);
+           this.invoiceHeaderGridOptions.api.sizeColumnsToFit();
+           if (w.length<1)
+             {
+             this.invoiceDetails = [];
+             this.invoiceDetailGridOptions.api.setRowData(this.invoiceDetails);          
+             }
+           else
+             {
+             let first=true;
+             this.invoiceHeaderGridOptions.api.forEachNode(w => { w.setSelected(first); first=false; } );
+             }           
+           } );
+      }
+    else
+      {
+      this.invoiceHeaders = [];
+      this.invoiceHeaderGridOptions.api.setRowData(this.invoiceHeaders);
+      this.invoiceDetails = [];
+      this.invoiceDetailGridOptions.api.setRowData(this.invoiceDetails);
+      }
     }
-
+  
+  private selectInvoiceHeader(hdr:InvoiceHeader)
+    {
+    if (hdr!=null)
+      {
+      this.selectedInvoiceHeader=hdr;
+      this.invoiceDataService.getInvoiceDetails(this.selectedInvoiceHeader.id).subscribe(w => 
+        {
+        this.invoiceDetails = w;
+        this.invoiceDetailGridOptions.api.setRowData(this.invoiceDetails);
+        this.invoiceDetailGridOptions.api.sizeColumnsToFit();
+        } );
+      }
+    else
+      {
+      this.invoiceDetails = [];
+      this.invoiceDetailGridOptions.api.setRowData(this.invoiceDetails); 
+      }
+    }
+ 
   }
