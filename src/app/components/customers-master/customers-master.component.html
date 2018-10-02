@@ -1,17 +1,23 @@
 <h2>Customers</h2>
 
-<ul class="customers">
-  <li *ngFor="let customer of customers" (click)="onSelect(customer)">
-    <a routerLink="/detail/{{customer.id}}"><span class="badge">{{customer.id}}</span> {{customer.name}}</a> 
-    <button class="delete" title="delete customer" (click)="deleteCustomer(customer.id)">x</button>
-    <button class="invoice" title="create invoice for the customer" (click)="createInvoice(customer.id)">I</button>
-  </li>
-</ul>
+<div class="row">
+  <ag-grid-angular style="width: 500px; height: 150px;" class="ag-theme-balham col-4" [gridOptions]="customerGridOptions"></ag-grid-angular>
 
-<a class="button" routerLink="/detail/0">New Customer</a> 
+  <div class="col-2">
+    <div><a class="button" routerLink="/detail/0">New Customer</a></div>
+    <span *ngIf="selectedCustomer">
+      <div><a class="button" routerLink="/detail/{{selectedCustomer.id}}">Edit Customer</a></div>
+      <div><a class="button" (click)="deleteCustomer(selectedCustomer.id)">Delete Customer</a></div>
+      <div><a class="button" (click)="createInvoice(selectedCustomer.id)">Create Invoice</a></div>
+    </span>
+  </div>
+
+  <div class="col-6"></div>
+
+</div>
 
 <hr>
 
 <p>Invoices:</p>
-<ag-grid-angular style="width: 800px; height: 150px;" class="ag-theme-balham" [gridOptions]="invoiceHeaderGridOptions" ></ag-grid-angular>
-<ag-grid-angular style="width: 800px; height: 100px;" class="ag-theme-balham" [gridOptions]="invoiceDetailGridOptions" ></ag-grid-angular>
+<ag-grid-angular style="width: 800px; height: 150px;" class="ag-theme-balham" [gridOptions]="invoiceHeaderGridOptions"></ag-grid-angular>
+<ag-grid-angular style="width: 800px; height: 100px;" class="ag-theme-balham" [gridOptions]="invoiceDetailGridOptions"></ag-grid-angular>

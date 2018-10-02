@@ -34,18 +34,25 @@ export class CustomersMasterComponent implements OnInit
     {headerName: 'Due', field: 'due', cellRenderer: (data) => { return data.value.toDate().toLocaleDateString('hu'); }},
     {headerName: 'Fulfilment', field: 'fulfilment', cellRenderer: (data) => { return data.value.toDate().toLocaleDateString('hu'); }},
     {headerName: 'Payment', field: 'paymentMethod'},
-    {headerName: 'Net', field: 'totalNet'},
-    {headerName: 'Gross', valueGetter: 'data.totalNet+data.totalVat'}
+    {headerName: 'Net', field: 'totalNet', type: "numericColumn"},
+    {headerName: 'Gross', valueGetter: 'data.totalNet+data.totalVat', type: "numericColumn"}
     ];
 
   detailColumnDefs = 
     [
     {headerName: 'Pr. Code', field: 'productCode' },
     {headerName: 'Pr.Name', field: 'productName' },
-    {headerName: 'Price', field: 'productPrice' },
-    {headerName: 'Qty', field: 'qty' },
-    {headerName: 'Unit', field: 'unit' },
-    {headerName: 'Gross', valueGetter: 'data.qty+data.productPrice' }
+    {headerName: 'Price', field: 'productPrice', type: "numericColumn" },
+    {headerName: 'Qty', field: 'qty', type: "numericColumn" },
+    {headerName: 'Unit', field: 'unit', type: "numericColumn" },
+    {headerName: 'Gross', valueGetter: 'data.qty*data.productPrice', type: "numericColumn" }
+    ]
+  
+    customerColumnDefs = 
+    [
+    {headerName: 'Id', field: 'id', width:50 },
+    {headerName: 'Name', field: 'name', width: 150 },
+    {headerName: 'Address', field: 'address', width:320 },
     ]
   
   invoiceDetailGridOptions: GridOptions = 
@@ -71,7 +78,6 @@ export class CustomersMasterComponent implements OnInit
       var sr = this.invoiceHeaderGridOptions.api.getSelectedRows();
       if (sr.length==1)
          {
-         console.log(sr[0]);
          this.selectedInvoiceHeader=sr[0];
          this.invoiceDataService.getInvoiceDetails(this.selectedInvoiceHeader.id).subscribe(w => 
              {
@@ -84,6 +90,24 @@ export class CustomersMasterComponent implements OnInit
     };
 
 
+  customerGridOptions: GridOptions = 
+    {
+    columnDefs: this.customerColumnDefs,
+    rowSelection: 'single',
+    enableSorting: true,
+    enableFilter: true,
+    enableColResize: true,
+    onGridReady: () => { this.customerGridOptions.api.setRowData([]); },
+    onSelectionChanged: () =>
+      {        
+      var sr = this.customerGridOptions.api.getSelectedRows();
+      if (sr.length==1)
+         {         
+         this.selectedCustomer=sr[0];
+         this.getInvoiceHeaders(this.selectedCustomer.id);
+         }
+      }
+    };
  
   constructor(private customerDataService: CustomerDataService, 
               private invoiceDataService: InvoiceDataService, 
@@ -105,21 +129,13 @@ export class CustomersMasterComponent implements OnInit
                });      
     }
 
-  onSelect(customer:Customer)
-    {
-    this.selectedCustomer = customer;
-    this.getInvoiceHeaders(customer.id);
-    }
-
-  onSelectInvoice(invoiceHeader: InvoiceHeader)
-    {
-    this.selectedInvoiceHeader=invoiceHeader;
-    this.invoiceDataService.getInvoiceDetails(invoiceHeader.id).subscribe(w => this.invoiceDetails = w);
-    }
-
   private getCustomers()
     {
-    this.customerDataService.getCustomers().subscribe(w => { this.customers = w; });           
+    this.customerDataService.getCustomers().subscribe(w => 
+        { 
+        this.customers = w;
+        this.customerGridOptions.api.setRowData(this.customers);
+        });           
     }
   
   private getInvoiceHeaders(customerId:string)
