@@ -8,6 +8,7 @@ import { InvoiceComponent } from '../invoice/invoice.component';
 import { InvoiceHeader } from '../../model/invoiceheader';
 import { InvoiceDetail } from '../../model/invoicedetail';
 import { GridOptions} from 'ag-grid-community';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers-master',
@@ -104,13 +105,24 @@ export class CustomersMasterComponent implements OnInit
  
   constructor(private customerDataService: CustomerDataService, 
               private invoiceDataService: InvoiceDataService, 
-              private modalService: BsModalService) { }
+              private modalService: BsModalService,
+              private router: Router) { }
   
   ngOnInit() { this.getCustomers();  }
 
   deleteCustomer(id: string)
     {
     this.customerDataService.deleteCustomer(id);    
+    }
+
+  createCustomer()
+    {
+    this.router.navigate(['/detail/0']);
+    }
+
+  editCustomer(id: string)
+    {
+    this.router.navigate(['/detail/'+id]);
     }
 
   createInvoice(id: string)

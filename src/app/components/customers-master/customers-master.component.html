@@ -4,12 +4,11 @@
   <ag-grid-angular style="width: 500px; height: 150px;" class="ag-theme-balham col-4" [gridOptions]="customerGridOptions"></ag-grid-angular>
 
   <div class="col-2">
-    <div><a class="button" routerLink="/detail/0">New Customer</a></div>
-    <span *ngIf="selectedCustomer">
-      <div><a class="button" routerLink="/detail/{{selectedCustomer.id}}">Edit Customer</a></div>
-      <div><a class="button" routerLink="/detail/{{selectedCustomer.id}}">Edit Customer</a></div>
-      <div><a class="button" (click)="deleteCustomer(selectedCustomer.id)">Delete Customer</a></div>
-      <div><a class="button" (click)="createInvoice(selectedCustomer.id)">Create Invoice</a></div>
+    <div><button class="customer-button" (click)="createCustomer()">New Customer</button></div>
+    <span *ngIf="selectedCustomer">      
+      <div><button class="customer-button" (click)="editCustomer(selectedCustomer.id)">Edit Customer</button></div>
+      <div><button class="customer-button" (click)="deleteCustomer(selectedCustomer.id)">Delete Customer</button></div>
+      <div><button class="customer-button" (click)="createInvoice(selectedCustomer.id)">Create Invoice</button></div>
     </span>
   </div>
 
