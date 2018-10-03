@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Customer } from '../../model/customer';
-import { CustomerDataService } from '../../services/customer-data.service'
+import { CustomerDataService } from '../../services/customer-data.service';
 import { InvoiceDataService } from '../../services/invoice-data.service';
-import { InvoiceComponent } from '../invoice/invoice.component'
+import { InvoiceComponent } from '../invoice/invoice.component';
 import { InvoiceHeader } from '../../model/invoiceheader';
 import { InvoiceDetail } from '../../model/invoicedetail';
-import {GridOptions} from "ag-grid-community";
+import { GridOptions} from 'ag-grid-community';
 
 @Component({
   selector: 'app-customers-master',
@@ -30,30 +30,30 @@ export class CustomersMasterComponent implements OnInit
   headerColumnDefs = 
     [
     {headerName: 'Inv. No.', field: 'invoiceNo' },
-    {headerName: 'Date', field: 'invoiceDate', cellRenderer: (data) => { return data.value.toDate().toLocaleDateString('hu'); }},
-    {headerName: 'Due', field: 'due', cellRenderer: (data) => { return data.value.toDate().toLocaleDateString('hu'); }},
-    {headerName: 'Fulfilment', field: 'fulfilment', cellRenderer: (data) => { return data.value.toDate().toLocaleDateString('hu'); }},
+    {headerName: 'Date', field: 'invoiceDate', cellRenderer: (data) => data.value.toDate().toLocaleDateString('hu')},
+    {headerName: 'Due', field: 'due', cellRenderer: (data) => data.value.toDate().toLocaleDateString('hu')},
+    {headerName: 'Fulfilment', field: 'fulfilment', cellRenderer: (data) => data.value.toDate().toLocaleDateString('hu')},
     {headerName: 'Payment', field: 'paymentMethod'},
-    {headerName: 'Net', field: 'totalNet', type: "numericColumn"},
-    {headerName: 'Gross', valueGetter: 'data.totalNet+data.totalVat', type: "numericColumn"}
+    {headerName: 'Net', field: 'totalNet', type: 'numericColumn'},
+    {headerName: 'Gross', valueGetter: 'data.totalNet+data.totalVat', type: 'numericColumn'}
     ];
 
   detailColumnDefs = 
     [
     {headerName: 'Pr. Code', field: 'productCode' },
     {headerName: 'Pr.Name', field: 'productName' },
-    {headerName: 'Price', field: 'productPrice', type: "numericColumn" },
-    {headerName: 'Qty', field: 'qty', type: "numericColumn" },
-    {headerName: 'Unit', field: 'unit', type: "numericColumn" },
-    {headerName: 'Gross', valueGetter: 'data.qty*data.productPrice', type: "numericColumn" }
-    ]
+    {headerName: 'Price', field: 'productPrice', type: 'numericColumn' },
+    {headerName: 'Qty', field: 'qty', type: 'numericColumn' },
+    {headerName: 'Unit', field: 'unit', type: 'numericColumn' },
+    {headerName: 'Gross', valueGetter: 'data.qty*data.productPrice', type: 'numericColumn' }
+    ];
   
     customerColumnDefs = 
     [
     {headerName: 'Id', field: 'id', width:50 },
     {headerName: 'Name', field: 'name', width: 150 },
     {headerName: 'Address', field: 'address', width:320 },
-    ]
+    ];
   
   invoiceDetailGridOptions: GridOptions = 
     {
@@ -63,7 +63,7 @@ export class CustomersMasterComponent implements OnInit
     enableFilter: true,
     enableColResize: true,
     onGridReady: () => { this.invoiceDetailGridOptions.api.setRowData([]); }
-    }
+    } ;
 
   invoiceHeaderGridOptions: GridOptions = 
     {
@@ -75,8 +75,8 @@ export class CustomersMasterComponent implements OnInit
     onGridReady: () => { this.invoiceHeaderGridOptions.api.setRowData([]); },
     onSelectionChanged: () =>
       {        
-      var sr = this.invoiceHeaderGridOptions.api.getSelectedRows();
-      if (sr.length==1)         
+      const sr = this.invoiceHeaderGridOptions.api.getSelectedRows();
+      if (sr.length===1)         
          this.selectInvoiceHeader(sr[0]);
       else
          this.selectInvoiceHeader(null);         
@@ -94,8 +94,8 @@ export class CustomersMasterComponent implements OnInit
     onGridReady: () => { this.customerGridOptions.api.setRowData([]); },
     onSelectionChanged: () =>
       {        
-      var sr = this.customerGridOptions.api.getSelectedRows();
-      if (sr.length==1)
+      const sr = this.customerGridOptions.api.getSelectedRows();
+      if (sr.length===1)
         this.selectCustomer(sr[0]);
       else
         this.selectCustomer(null);
@@ -139,7 +139,7 @@ export class CustomersMasterComponent implements OnInit
       this.invoiceDataService.getInvoiceListOfCustomer(customer.id).
         subscribe(w => 
            {
-           this.invoiceHeaders = w
+           this.invoiceHeaders = w;
            this.invoiceHeaderGridOptions.api.setRowData(this.invoiceHeaders);
            this.invoiceHeaderGridOptions.api.sizeColumnsToFit();
            if (w.length<1)
@@ -150,7 +150,7 @@ export class CustomersMasterComponent implements OnInit
            else
              {
              let first=true;
-             this.invoiceHeaderGridOptions.api.forEachNode(w => { w.setSelected(first); first=false; } );
+             this.invoiceHeaderGridOptions.api.forEachNode(z => { z.setSelected(first); first=false; } );
              }           
            } );
       }
