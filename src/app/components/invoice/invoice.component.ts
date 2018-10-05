@@ -11,17 +11,21 @@ import { InvoiceDataService } from '../../services/invoice-data.service';
   styleUrls: ['./invoice.component.css'],  
 })
 
+
 export class InvoiceComponent implements OnInit 
   {
   title = 'Creating invoice';
-
+  
   customerId: string;
   invoice: Invoice;  
   line: InvoiceDetail;
+  currentRow: InvoiceDetail = null;
 
   itemsPerPage = 5;
   currentPage = 1;
   detailsPage: InvoiceDetail[];
+
+  get IsInEditMode(): boolean { return this.currentRow!=null; }
     
   constructor(public bsModalRef: BsModalRef, private invoiceDataService: InvoiceDataService) 
     { 
@@ -52,6 +56,27 @@ export class InvoiceComponent implements OnInit
     }
   
 
+  editRow(row: InvoiceDetail): void 
+    {
+    this.currentRow = row;
+    row.copyTo(this.line);    
+    }
+
+  updateRow(): void
+    {
+    this.line.copyTo(this.currentRow);
+    this.currentRow = null;
+    this.recalcHeader();
+    this.resetToAddMode();
+    this.generateDetails();
+    }
+
+  cancelUpdate():void
+    {
+    this.currentRow = null;
+    this.resetToAddMode();
+    }
+
   deleteRow(row: InvoiceDetail): void 
     {
     for (let i = 0; i < this.invoice.details.length;  i++) 
@@ -65,7 +90,6 @@ export class InvoiceComponent implements OnInit
         }
       }
     }
-
 
   resetToAddMode(): void
     {

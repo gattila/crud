@@ -10,12 +10,17 @@
     width: 100%;
 }
 
-.deleteRow
+.editRow
     {
+    position: absolute;   
+    left:0px;    
     background-color:lightgray
     }
 
-.editRow
+.deleteRow
     {
+    position: absolute;
+    left: 28px;    
     background-color:lightgray
     }
+

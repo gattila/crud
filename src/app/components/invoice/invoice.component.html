@@ -68,8 +68,15 @@
       </select>
     </div>
 
-    <button type="button" class="btn" (click)="addToInvoice()">+</button>
+    
+    <button *ngIf="!IsInEditMode" type="button" class="btn" (click)="addToInvoice()">+</button>
+    
 
+    <span *ngIf="IsInEditMode">
+      <button type="button" class="btn" (click)="updateRow()">+</button>
+      <button type="button" class="btn" (click)="cancelUpdate()">x</button>
+    </span>
+    
   </div>
 
   <div class="row">
@@ -89,7 +96,8 @@
     <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice}}</div>
     <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice*detail.qty}}</div>
     <div class="col-xs-12 col-12 col-md-1 form-group">
-      <button class="deleteRow" title="delete row" (click)="deleteRow(detail)">x</button>
+      <button class="deleteRow" title="delete row" (click)="deleteRow(detail)">x</button>      
+      <button class="editRow" title="edit row" (click)="editRow(detail)">*</button>      
     </div>
   </div>
 
