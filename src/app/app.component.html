@@ -1,19 +1,24 @@
 <div *ngIf="afAuth.user | async as user; else showLogin">
 
-    <div class="loginHeader">
-        <label>Current user: <span>{{ user.displayName }}</span></label>
-        <button (click)="logout()">Logout</button>
-    </div>
+  <div class="loginHeader">
+    <label>Current user: <span>{{ user.displayName }}</span></label>
+    <button (click)="logout()">Logout</button>
+  </div>
 
-    <h1>{{title}}</h1>
+  <h1>{{title}}</h1>
 
-    <router-outlet></router-outlet>
-    <app-messages></app-messages>
+  <tabset>
+    <tab heading="Customers" class="mt-2" (select)="router.navigate(['customers'])"></tab>
+    <tab heading="Products" class="mt-2" (select)="router.navigate(['products'])"></tab>
+  </tabset>
+
+  <router-outlet></router-outlet>
+  <app-messages></app-messages>
 
 </div>
 
 <ng-template #showLogin>
-    <h1>{{title}}</h1>
-    <p>Please login.</p>
-    <button (click)="login()">Login with Google</button>
+  <h1>{{title}}</h1>
+  <p>Please login.</p>
+  <button (click)="login()">Login with Google</button>
 </ng-template>
