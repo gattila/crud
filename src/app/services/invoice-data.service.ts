@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, ObjectUnsubscribedError } from 'rxjs';
+import { Observable, of} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AngularFirestore, DocumentChangeAction } from 'angularfire2/firestore';
+import { AngularFirestore} from 'angularfire2/firestore';
 import { MessageService } from './message.service';
 import { CustomerDataService } from '../services/customer-data.service';
 
 import { InvoiceHeader } from '../model/invoiceheader';
 import { InvoiceDetail } from '../model/invoicedetail';
-import {Customer} from '../model/customer';
 import { Invoice } from '../viewmodel/invoice';
-import { InvokeFunctionExpr } from '@angular/compiler';
 
 @Injectable({ providedIn: 'root' })
 
@@ -57,12 +55,12 @@ export class InvoiceDataService
         this.messageService.add('Calculating new invocie No' );
         let n = 0;
         w.docs.forEach(q => { 
-                            let h = q.data() as InvoiceHeader;
+                            const h = q.data() as InvoiceHeader;
                             if (h.invoiceNo > n) n=h.invoiceNo;   
                             });                  
         n = n + 1;
         this.writeInvoiceBase(inv,n);        
-        })            
+        });            
     }
 
   writeInvoiceBase(inv: Invoice, invNo: number): void

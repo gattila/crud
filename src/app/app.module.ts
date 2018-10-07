@@ -16,6 +16,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ModalModule, BsDatepickerModule, PaginationModule, TabsModule } from 'ngx-bootstrap';
 
 import { AgGridModule } from 'ag-grid-angular';
+import { ProductsMasterComponent } from './components/products-master/products-master.component';
+import { ProductsDetailComponent } from './components/products-detail/products-detail.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { AgGridModule } from 'ag-grid-angular';
     CustomersMasterComponent,
     CustomerDetailComponent,
     MessagesComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    ProductsMasterComponent,
+    ProductsDetailComponent
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
@@ -33,7 +37,7 @@ import { AgGridModule } from 'ag-grid-angular';
     ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot(), TabsModule.forRoot(),
     AgGridModule.withComponents([]),
   ],
-  entryComponents: [InvoiceComponent],
+  entryComponents: [InvoiceComponent, ProductsDetailComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

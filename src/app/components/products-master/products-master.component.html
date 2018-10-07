@@ -1,0 +1,14 @@
+<div class="row">
+  <ag-grid-angular style="width: 500px; height: 150px;" class="ag-theme-balham col-4" [gridOptions]="productGridOptions"></ag-grid-angular>
+
+  <div class="col-2">
+    <div><button class="product-button" (click)="createProduct()">New Product</button></div>
+    <span *ngIf="selectedProduct">      
+      <div><button class="product-button" (click)="editProduct(selectedProduct.id)">Edit Product</button></div>
+      <div><button class="product-button" (click)="deleteProduct(selectedProduct.id)">Delete Product</button></div>      
+    </span>
+  </div>
+
+  <div class="col-6"></div>
+
+</div>

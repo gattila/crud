@@ -1,0 +1,42 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{title}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div *ngIf="product" class="modal-body">
+
+  <div>
+    <label for="inPrCode">Code:</label>
+    <input id="inPrCode" type="text" class="form-control product-code" [(ngModel)]="product.code" />
+  </div>
+
+  <div>
+      <label for="inPrName">Name:</label>
+      <input id="inPrName" type="text" class="form-control product-name" [(ngModel)]="product.name" />
+  </div>
+
+  <div>
+      <label for="inPrPrice">Price:</label>
+      <input id="inPrPrice" type="text" class="form-control product-price" [(ngModel)]="product.price" />
+  </div>
+
+  <div>
+      <label for="inPrUnit">Unit:</label>
+
+      <select id="inPrUnit" class="form-control product-unit" [(ngModel)]="product.unit">
+        <option value="Piece">Piece</option>
+        <option value="Litre">Litre</option>
+        <option value="Kg">Kg</option>
+        <option value="Hour">Hour</option>
+      </select>      
+  </div>
+
+</div>
+
+<div class="row bottom-row">
+  <div class="col-9 form-group"></div>
+  <div class="col-1 form-group"><button type="button" class="btn btn-default" (click)="saveAndClose()">Ok</button></div>
+  <div class="col-1 form-group"><button type="button" class="btn" (click)="bsModalRef.hide()">Cancel</button></div>
+</div>

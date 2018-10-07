@@ -45,7 +45,7 @@ export class CustomersMasterComponent implements OnInit
     {headerName: 'Pr.Name', field: 'productName' },
     {headerName: 'Price', field: 'productPrice', type: 'numericColumn' },
     {headerName: 'Qty', field: 'qty', type: 'numericColumn' },
-    {headerName: 'Unit', field: 'unit', type: 'numericColumn' },
+    {headerName: 'Unit', field: 'unit' },
     {headerName: 'Gross', valueGetter: 'data.qty*data.productPrice', type: 'numericColumn' }
     ];
   
