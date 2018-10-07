@@ -140,6 +140,13 @@ export class CustomersMasterComponent implements OnInit
         { 
         this.customers = w;
         this.customerGridOptions.api.setRowData(this.customers);
+     
+        if (!this.selectedCustomer)
+          {
+          let first=true;
+          this.customerGridOptions.api.forEachNode(z => { z.setSelected(first); first=false; } );  
+          }
+
         });           
     }
   

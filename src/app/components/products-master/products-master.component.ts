@@ -5,6 +5,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ProductDataService } from '../../services/product-data.service';
 import { Product } from '../../model/product';
 import { ProductsDetailComponent } from '../products-detail/products-detail.component';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-products-master',
@@ -45,7 +46,7 @@ export class ProductsMasterComponent implements OnInit
       }
     };
 
-  constructor(private dataService: ProductDataService, private modalService: BsModalService) { }
+  constructor(private dataService: ProductDataService, private modalService: BsModalService, private msg:MessageService) { }
 
   ngOnInit() { this.getProducts(); }
 
@@ -56,6 +57,11 @@ export class ProductsMasterComponent implements OnInit
       this.products = w; 
       this.productGridOptions.api.setRowData(this.products);
       this.productGridOptions.api.sizeColumnsToFit();
+      if (!this.selectedProduct)
+        {
+        let first=true;
+        this.productGridOptions.api.forEachNode(z => { z.setSelected(first); first=false; } );
+        }
       });
     }
 
