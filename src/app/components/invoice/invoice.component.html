@@ -9,23 +9,23 @@
   <hr>
   <div class="row">
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inDate">InvoiceDate:</label>
       <input id="inDate" type="text" class="form-control" value="{{invoice.header.invoiceDate | date:'yyyy.dd.MM'}}"
         readonly="true">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inDue">Due:</label>
       <input id="inDue" type="text" placeholder="Due" class="form-control" bsDatepicker [(ngModel)]="invoice.header.due">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inFulfilment">Fulfilment:</label>
       <input id="inFulfilment" type="text" placeholder="Fulfilment" class="form-control" bsDatepicker [(ngModel)]="invoice.header.fulfilment">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-3 form-group">
+    <div class="col-3 form-group">
       <label for="inPayment">Payment method:</label>
 
       <select id="inPayment" class="form-control" [(ngModel)]="invoice.header.paymentMethod">
@@ -37,27 +37,27 @@
 
     <div class="w-100"></div>
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inPrCode">Product code:</label>
       <input id="inPrCode" type="text" class="form-control" [(ngModel)]="line.productCode">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-4 form-group">
+    <div class="col-4 form-group">
       <label for="inPrName">Product name:</label>
       <input id="inPrName" type="text" class="form-control" [(ngModel)]="line.productName">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inPrPrice">Product price:</label>
       <input id="inPrPrice" type="text" class="form-control" [(ngModel)]="line.productPrice">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-1 form-group">
+    <div class="col-1 form-group">
       <label for="inPrQty">Qty:</label>
       <input id="inPrQty" type="text" class="form-control" [(ngModel)]="line.qty">
     </div>
 
-    <div class="col-xs-12 col-12 col-md-2 form-group">
+    <div class="col-2 form-group">
       <label for="inUnit">Unit:</label>
 
       <select id="inUnit" class="form-control" [(ngModel)]="line.unit">
@@ -69,33 +69,35 @@
     </div>
 
     
-    <button *ngIf="!IsInEditMode" type="button" class="btn" (click)="addToInvoice()">+</button>
+    <div *ngIf="!IsInEditMode" class="col-1 form-group">
+      <button type="button" class="buttonBarOk" (click)="addToInvoice()">+</button>
+    </div>
     
 
-    <span *ngIf="IsInEditMode">
-      <button type="button" class="btn" (click)="updateRow()">+</button>
-      <button type="button" class="btn" (click)="cancelUpdate()">x</button>
-    </span>
+    <div *ngIf="IsInEditMode" class="col-1 form-group">
+      <button type="button" class="buttonBarOk" (click)="updateRow()">+</button>
+      <button type="button" class="buttonBarCancel" (click)="cancelUpdate()">x</button>
+    </div>
     
   </div>
 
   <div class="row">
-    <div class="col-xs-12 col-12 col-md-2 form-group">Product code</div>
-    <div class="col-xs-12 col-12 col-md-3 form-group">Product name</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group">Qty</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group">Unit</div>
-    <div class="col-xs-12 col-12 col-md-2 form-group">Price</div>
-    <div class="col-xs-12 col-12 col-md-2 form-group">Gross</div>
+    <div class="col-2 form-group">Product code</div>
+    <div class="col-3 form-group">Product name</div>
+    <div class="col-1 form-group">Qty</div>
+    <div class="col-1 form-group">Unit</div>
+    <div class="col-2 form-group">Price</div>
+    <div class="col-2 form-group">Gross</div>
   </div>
 
-  <div *ngFor="let detail of detailsPage" class="row">
-    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productCode}}</div>
-    <div class="col-xs-12 col-12 col-md-3 form-group">{{detail.productName}}</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.qty}}</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group">{{detail.unit}}</div>
-    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice}}</div>
-    <div class="col-xs-12 col-12 col-md-2 form-group">{{detail.productPrice*detail.qty}}</div>
-    <div class="col-xs-12 col-12 col-md-1 form-group">
+  <div *ngFor="let detail of detailsPage" class="row" [class.highlightedDetailRow] = "currentRow===detail">
+    <div class="col-2 form-group">{{detail.productCode}}</div>
+    <div class="col-3 form-group">{{detail.productName}}</div>
+    <div class="col-1 form-group">{{detail.qty}}</div>
+    <div class="col-1 form-group">{{detail.unit}}</div>
+    <div class="col-2 form-group">{{detail.productPrice}}</div>
+    <div class="col-2 form-group">{{detail.productPrice*detail.qty}}</div>
+    <div class="col-1 form-group">
       <button class="deleteRow" title="delete row" (click)="deleteRow(detail)">x</button>      
       <button class="editRow" title="edit row" (click)="editRow(detail)">*</button>      
     </div>

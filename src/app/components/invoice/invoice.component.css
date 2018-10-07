@@ -1,26 +1,44 @@
 .modal-body
-{
-    height: 550px;
-}
-
+  {
+  height: 550px;
+  }
+  
 .bottom-row
-{
-    position: absolute;
-    bottom: -20px;
-    width: 100%;
-}
+  {
+  position: absolute;
+  bottom: -20px;
+  width: 100%;
+  }
+
+.buttonBarOk
+  {
+  position: absolute;
+  left: -5px;
+  height: 100%;
+  }
+
+.buttonBarCancel
+  {
+  position: absolute;
+  left: 32px;  
+  height: 100%;
+  }
 
 .editRow
-    {
-    position: absolute;   
-    left:0px;    
-    background-color:lightgray
-    }
+  {
+  position: absolute;   
+  left:0px;    
+  background-color:lightgray
+  }
 
 .deleteRow
-    {
-    position: absolute;
-    left: 28px;    
-    background-color:lightgray
-    }
+  {
+  position: absolute;
+  left: 28px;    
+  background-color:lightgray
+  }
 
+.highlightedDetailRow
+  {
+  color:blue;    
+  }
