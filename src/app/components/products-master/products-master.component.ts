@@ -54,7 +54,7 @@ export class ProductsMasterComponent implements OnInit
     {
     this.dataService.getProductList().subscribe(w => 
       { 
-      this.products = w; 
+      this.products = w.sort((a,b) => a.code.localeCompare(b.code)); 
       this.productGridOptions.api.setRowData(this.products);
       this.productGridOptions.api.sizeColumnsToFit();
       if (!this.selectedProduct)

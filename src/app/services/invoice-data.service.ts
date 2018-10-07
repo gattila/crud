@@ -94,7 +94,7 @@ export class InvoiceDataService
              const id = a.payload.doc.id;
              const h: InvoiceHeader = { id, ...data };
              return h;
-             } ); 
+             }); 
           }
         ));                
     } 

@@ -158,7 +158,7 @@ export class CustomersMasterComponent implements OnInit
       this.invoiceDataService.getInvoiceListOfCustomer(customer.id).
         subscribe(w => 
            {
-           this.invoiceHeaders = w;
+           this.invoiceHeaders = w.sort((a,b) => a.invoiceNo-b.invoiceNo);
            this.invoiceHeaderGridOptions.api.setRowData(this.invoiceHeaders);
            this.invoiceHeaderGridOptions.api.sizeColumnsToFit();
            if (w.length<1)
