@@ -39,7 +39,11 @@
 
     <div class="col-2 form-group">
       <label for="inPrCode">Product code:</label>
-      <input id="inPrCode" type="text" class="form-control" [(ngModel)]="line.productCode">
+      <input id="inPrCode" type="text" class="form-control" [(ngModel)]="line.productCode" 
+        [typeahead]="products"
+        typeaheadOptionField="code" (typeaheadOnSelect)="productTypeaheadChanged($event)"
+        [typeaheadScrollable]="true"
+        [typeaheadOptionsInScrollableView]="5">
     </div>
 
     <div class="col-4 form-group">
@@ -68,17 +72,17 @@
       </select>
     </div>
 
-    
+
     <div *ngIf="!IsInEditMode" class="col-1 form-group">
       <button type="button" class="buttonBarOk" (click)="addToInvoice()">+</button>
     </div>
-    
+
 
     <div *ngIf="IsInEditMode" class="col-1 form-group">
       <button type="button" class="buttonBarOk" (click)="updateRow()">+</button>
       <button type="button" class="buttonBarCancel" (click)="cancelUpdate()">x</button>
     </div>
-    
+
   </div>
 
   <div class="row">
@@ -90,7 +94,7 @@
     <div class="col-2 form-group">Gross</div>
   </div>
 
-  <div *ngFor="let detail of detailsPage" class="row" [class.highlightedDetailRow] = "currentRow===detail">
+  <div *ngFor="let detail of detailsPage" class="row" [class.highlightedDetailRow]="currentRow===detail">
     <div class="col-2 form-group">{{detail.productCode}}</div>
     <div class="col-3 form-group">{{detail.productName}}</div>
     <div class="col-1 form-group">{{detail.qty}}</div>
@@ -98,8 +102,8 @@
     <div class="col-2 form-group">{{detail.productPrice}}</div>
     <div class="col-2 form-group">{{detail.productPrice*detail.qty}}</div>
     <div class="col-1 form-group">
-      <button class="deleteRow" title="delete row" (click)="deleteRow(detail)">x</button>      
-      <button class="editRow" title="edit row" (click)="editRow(detail)">*</button>      
+      <button class="deleteRow" title="delete row" (click)="deleteRow(detail)">x</button>
+      <button class="editRow" title="edit row" (click)="editRow(detail)">*</button>
     </div>
   </div>
 
@@ -109,7 +113,8 @@
     </div>
     <div class="col-xs-12 col-12 col-md-2 form-group">Net: {{invoice.header.totalNet | number:"1.0-0"}}</div>
     <div class="col-xs-12 col-12 col-md-2 form-group">Vat: {{invoice.header.totalVat | number:"1.0-0"}}</div>
-    <div class="col-xs-12 col-12 col-md-2 form-group">Gross: {{invoice.header.totalNet+ invoice.header.totalVat | number:"1.0-0"}}</div>
+    <div class="col-xs-12 col-12 col-md-2 form-group">Gross: {{invoice.header.totalNet+ invoice.header.totalVat |
+      number:"1.0-0"}}</div>
     <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="saveAndClose()">Ok</button></div>
     <div class="col-xs-12 col-12 col-md-1 form-group"><button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button></div>
   </div>

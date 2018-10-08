@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';
 import { InvoiceDetail } from '../../model/invoicedetail';
 import { Invoice } from '../../viewmodel/invoice';
 import { InvoiceDataService } from '../../services/invoice-data.service';
+import { Product } from '../../model/product';
+import { ProductDataService } from '../../services/product-data.service';
+
 
 @Component({
   selector: 'app-invoice',
@@ -25,9 +29,13 @@ export class InvoiceComponent implements OnInit
   currentPage = 1;
   detailsPage: InvoiceDetail[];
 
+  products: Product[];  
+
   get IsInEditMode(): boolean { return this.currentRow!=null; }
     
-  constructor(public bsModalRef: BsModalRef, private invoiceDataService: InvoiceDataService) 
+  constructor(public bsModalRef: BsModalRef, 
+              private invoiceDataService: InvoiceDataService, 
+              private productDataService: ProductDataService) 
     { 
     this.resetToAddMode();
     }
@@ -38,7 +46,9 @@ export class InvoiceComponent implements OnInit
          {            
          this.invoice = w; 
          this.generateDetails();
-         });    
+         }); 
+         
+    this.productDataService.getProductList().subscribe(w=>this.products=w.sort((a,b) => a.code.localeCompare(b.code)));
     }
   
   saveAndClose(): void
@@ -127,4 +137,16 @@ export class InvoiceComponent implements OnInit
       const endItem = event.page * event.itemsPerPage;
       this.detailsPage = this.invoice.details.slice(startItem, endItem);
       }
+
+    productTypeaheadChanged(event: TypeaheadMatch):void
+      {
+      const p = event.item as Product;
+      this.line.productCode=p.code;
+      this.line.productName=p.name;
+      this.line.productPrice=p.price;
+      this.line.unit=p.unit;
+      this.line.vatPercent=p.vatPercent;
+      }
+    
+
   }
