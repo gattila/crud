@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase';
 
 import { ProductDataService } from '../../services/product-data.service';
 import { Product } from '../../model/product';
 import { MessageService } from '../../services/message.service';
+import { ImageStoreService } from '../../services/image-store.service';
 
 @Component({
   selector: 'app-products-detail',
@@ -24,7 +24,10 @@ export class ProductsDetailComponent implements OnInit
 
   get title():string { return this.productId ? 'Editing product' : 'New product'; }
 
-  constructor(public bsModalRef: BsModalRef, private dataService: ProductDataService, private messageService: MessageService) { }
+  constructor(public bsModalRef: BsModalRef, 
+              private dataService: ProductDataService, 
+              private messageService: MessageService,
+              private imgService: ImageStoreService) { }
   
   ngOnInit() 
     { 
@@ -54,24 +57,17 @@ export class ProductsDetailComponent implements OnInit
     if (this.selectedFiles!=null)
       {
       const file = this.selectedFiles.item(0);
-
-      const fileName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
-      const storageRef = firebase.storage().ref(`${this.basePath}/${fileName}`);
-      storageRef.put(file).then(w =>
-          {        
-          storageRef.getDownloadURL().then(c=>
-             {
-             this.product.imageURL = c;
-             this.product.imageName = fileName;
-             if (this.productId)
-               this.dataService.updateProduct(this.product);
-             else
-               this.dataService.addProduct(this.product);
-             
-             this.bsModalRef.hide();                       
-             });
-          });     
+      this.imgService.storeImage(this.basePath,file).then(w =>
+        {
+          this.product.imageURL = w.url;
+          this.product.imageName = w.name;
+          if (this.productId)
+            this.dataService.updateProduct(this.product);
+          else
+            this.dataService.addProduct(this.product);
+          
+          this.bsModalRef.hide(); 
+        });
       }
 
     }
