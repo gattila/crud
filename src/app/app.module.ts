@@ -12,6 +12,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { ModalModule, BsDatepickerModule, PaginationModule, TabsModule, TypeaheadModule } from 'ngx-bootstrap';
 
@@ -33,7 +34,7 @@ import { ProductsDetailComponent } from './components/products-detail/products-d
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebase), 
-    AngularFirestoreModule, AngularFireAuthModule,
+    AngularFirestoreModule, AngularFireAuthModule, AngularFireDatabaseModule,
     ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot(), TabsModule.forRoot(),TypeaheadModule.forRoot(),
     AgGridModule.withComponents([]),
   ],

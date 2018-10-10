@@ -6,4 +6,7 @@ export class Product
   vatPercent: number;
   price: number;
   unit: string;
+  imageURL: string;
+  imageName: string;
+  file: File;
   }

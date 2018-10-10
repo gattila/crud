@@ -33,6 +33,15 @@
       </select>      
   </div>
 
+  <div *ngIf="product.imageURL">
+    <img src="{{product.imageURL}}" alt="Picture of the product" class="product-image">
+  </div>
+
+  <div>
+    <label for="inPrImageUpload">Image:</label>
+    <input id="inPrImageUpload" type="file" (change)="selectFile($event)" />
+  </div>
+
 </div>
 
 <div class="row bottom-row">
