@@ -14,7 +14,7 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { ModalModule, BsDatepickerModule, PaginationModule, TabsModule, TypeaheadModule } from 'ngx-bootstrap';
+import { ModalModule, BsDatepickerModule, PaginationModule, TabsModule, TypeaheadModule, ProgressbarModule } from 'ngx-bootstrap';
 
 import { AgGridModule } from 'ag-grid-angular';
 import { ProductsMasterComponent } from './components/products-master/products-master.component';
@@ -35,7 +35,8 @@ import { ProductsDetailComponent } from './components/products-detail/products-d
     BrowserModule, FormsModule, AppRoutingModule, 
     AngularFireModule.initializeApp(environment.firebase), 
     AngularFirestoreModule, AngularFireAuthModule, AngularFireDatabaseModule,
-    ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot(), TabsModule.forRoot(),TypeaheadModule.forRoot(),
+    ModalModule.forRoot(), BsDatepickerModule.forRoot(), PaginationModule.forRoot(), 
+    TabsModule.forRoot(), TypeaheadModule.forRoot(), ProgressbarModule.forRoot(), 
     AgGridModule.withComponents([]),
   ],
   entryComponents: [InvoiceComponent, ProductsDetailComponent],

@@ -17,11 +17,9 @@ import { ImageStoreService } from '../../services/image-store.service';
 export class ProductsDetailComponent implements OnInit 
   {
   productId:string;
-  product: Product;
-
-  selectedFiles: FileList = null;
-  basePath = '/productImages';
-
+  product: Product;  
+  progress_value = -1;
+  
   get title():string { return this.productId ? 'Editing product' : 'New product'; }
 
   constructor(public bsModalRef: BsModalRef, 
@@ -36,6 +34,8 @@ export class ProductsDetailComponent implements OnInit
       this.product = new Product();
       this.product.vatPercent=27;
       this.product.unit = 'Piece';
+      this.product.imageURL = null;
+      this.product.imageName = null;
       }
     else              
       this.dataService.getProduct(this.productId).then(w => this.product=w);      
@@ -44,31 +44,29 @@ export class ProductsDetailComponent implements OnInit
 
   selectFile(event) 
     {
-    const file = event.target.files.item(0);
+    const file = event.target.files.item(0) as File;
+    const name = this.imgService.GenerateImageName();
    
     if (file.type.match('image.*')) 
-      this.selectedFiles = event.target.files;
+      {
+      this.imgService.StoreImage(name, file, 
+          pr =>{ this.progress_value=pr; }, 
+          er => { this.messageService.add(er.message);  }, 
+          url => { this.progress_value=-1; 
+                   this.product.imageURL=url; 
+                   this.product.imageName=name; });
+      }
     else 
       this.messageService.add('Bad image format!');
     }
   
   saveAndClose():void
     {
-    if (this.selectedFiles!=null)
-      {
-      const file = this.selectedFiles.item(0);
-      this.imgService.storeImage(this.basePath,file).then(w =>
-        {
-          this.product.imageURL = w.url;
-          this.product.imageName = w.name;
-          if (this.productId)
-            this.dataService.updateProduct(this.product);
-          else
-            this.dataService.addProduct(this.product);
-          
-          this.bsModalRef.hide(); 
-        });
-      }
-
+    if (this.productId)
+      this.dataService.updateProduct(this.product);
+    else
+      this.dataService.addProduct(this.product);
+    
+    this.bsModalRef.hide(); 
     }
   }

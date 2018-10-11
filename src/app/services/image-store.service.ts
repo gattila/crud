@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
-import { UploadResult } from './image-store-uploadresult';
 
 @Injectable({ providedIn: 'root' })
 
@@ -8,13 +7,21 @@ export class ImageStoreService
   {
   constructor() { }
 
-  storeImage(basePath:string, file:File): Promise<UploadResult>
-    {
-      const fileName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-      const storageRef = firebase.storage().ref(`${basePath}/${fileName}`);
+  basePath = '/productImages';
 
-      return new Promise<UploadResult>(resolve => storageRef.put(file).
-        then(() => storageRef.getDownloadURL().then(c => resolve({name: fileName, url: c}))));           
+  GenerateImageName():string
+    {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);  
+    }
+
+  StoreImage(fileName:string, file:File, progress:(percent:number)=>void, error:(er:Error)=>void, finish:(url:string)=>void)
+    {
+    const storageRef = firebase.storage().ref(`${this.basePath}/${fileName}`);
+
+    storageRef.put(file).on(firebase.storage.TaskEvent.STATE_CHANGED,
+        (sn:firebase.storage.UploadTaskSnapshot) => progress(Math.round((sn.bytesTransferred / sn.totalBytes) * 100)),        
+        (er:Error)=>error(er), 
+        ()=> { storageRef.getDownloadURL().then(w => finish(w)); });    
     }
 
   }

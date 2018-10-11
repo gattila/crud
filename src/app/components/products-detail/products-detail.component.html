@@ -42,6 +42,9 @@
     <input id="inPrImageUpload" type="file" (change)="selectFile($event)" />
   </div>
 
+  <div *ngIf="progress_value>-1" class="progress-bar">      
+    <progressbar [value]="progress_value" [max]="100" [animate]="true"></progressbar>
+  </div>
 </div>
 
 <div class="row bottom-row">
