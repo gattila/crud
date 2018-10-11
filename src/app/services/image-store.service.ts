@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
+import { UploadResult } from './image-store-uploadresult';
 
 @Injectable({ providedIn: 'root' })
-
-export class UploadResult 
-  {
-  name: string;
-  url: string;
-  }
 
 export class ImageStoreService 
   {
